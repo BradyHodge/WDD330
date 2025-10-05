@@ -8,6 +8,7 @@
     "start": "vite",
     "build": "vite build --emptyOutDir",
     "preview": "vite preview",
+    "dev": "vite",
     "lint": "eslint *.js src/**/*.js",
     "format": "prettier --ignore-path ./.gitignore --write \"./**/*.{html,json,js,ts,css}\"",
     "test": "vitest"
