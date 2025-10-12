@@ -1,38 +1,90 @@
+// src/js/productDetails.mjs
 import { findProductById } from "./productData.mjs";
-import { setLocalStorage, getLocalStorage } from "./utils.mjs";
 
-let product = {};
+let currentProduct = null;
 
-export default async function productDetails(productId) {
-  // use findProductById to get the details for the current product
-  product = await findProductById(productId);
-  // once we have the product details we can render out the HTML
-  renderProductDetails();
-  // add a listener to Add to Cart button
-  document.getElementById("addToCart").addEventListener("click", addToCart);
-}
-
-function addProductToCart(product) {
-  let cart = getLocalStorage("so-cart") || [];
-  cart.push(product);
-  setLocalStorage("so-cart", cart);
-}
-
-function addToCart() {
-  addProductToCart(product);
-}
-
+// --- Render del detalle en el HTML ---
 function renderProductDetails() {
-  document.getElementById("productName").textContent = product.Brand.Name;
-  document.getElementById("productNameWithoutBrand").textContent =
-    product.NameWithoutBrand;
-  document.getElementById("productImage").src = product.Image;
-  document.getElementById("productImage").alt = product.Name;
-  document.getElementById("productFinalPrice").textContent =
-    `$${product.FinalPrice}`;
-  document.getElementById("productColorName").textContent =
-    product.Colors[0].ColorName;
-  document.getElementById("productDescriptionHtmlSimple").innerHTML =
-    product.DescriptionHtmlSimple;
-  document.getElementById("addToCart").dataset.id = product.Id;
+  if (!currentProduct) return;
+
+  // 1) Títulos / nombres
+  const name = currentProduct.Name || currentProduct.name || "";
+  const brand = currentProduct.Brand || currentProduct.brand || "";
+  const nameWithoutBrand =
+    currentProduct.NameWithoutBrand ||
+    currentProduct.productNameWithoutBrand ||
+    name.replace(new RegExp(brand, "i"), "").trim();
+
+  document.getElementById("productName").textContent = name;
+  document.getElementById("productNameWithoutBrand").textContent = nameWithoutBrand;
+
+  // 2) Imagen
+  const imgEl = document.getElementById("productImage");
+  const imgSrc =
+    currentProduct.Image ||
+    currentProduct.ImagePrimary ||
+    currentProduct.image ||
+    currentProduct.Images?.[0] ||
+    "";
+  imgEl.src = imgSrc;
+  imgEl.alt = name;
+
+  // 3) Precio
+  const priceEl = document.getElementById("productFinalPrice");
+  const price =
+    currentProduct.FinalPrice ??
+    currentProduct.finalPrice ??
+    currentProduct.Price ??
+    currentProduct.price ??
+    0;
+  // Muestra como $199.99
+  priceEl.textContent =
+    typeof price === "number" ? `$${price.toFixed(2)}` : String(price);
+
+  // 4) Color
+  const colorEl = document.getElementById("productColorName");
+  const color =
+    currentProduct.Colors?.[0]?.ColorName ||
+    currentProduct.ColorName ||
+    currentProduct.color ||
+    "";
+  colorEl.textContent = color;
+
+  // 5) Descripción
+  const descEl = document.getElementById("productDescriptionHtmlSimple");
+  descEl.textContent =
+    currentProduct.DescriptionHtmlSimple ||
+    currentProduct.description ||
+    "";
+
+  // 6) Botón Add to Cart
+  const btn = document.getElementById("addToCart");
+  btn.dataset.id = currentProduct.Id || currentProduct.id || "";
+}
+
+// --- Add to Cart (versión mínima funcional con localStorage) ---
+function addToCart(e) {
+  const id = e?.currentTarget?.dataset?.id;
+  if (!id || !currentProduct) return;
+
+  const key = "so-cart";
+  const cart = JSON.parse(localStorage.getItem(key)) || [];
+  cart.push(currentProduct);
+  localStorage.setItem(key, JSON.stringify(cart));
+
+  // (Opcional) feedback rápido:
+  // alert("Added to cart!");
+}
+
+// --- Punto de entrada del módulo ---
+export default async function productDetails(productId) {
+  // 1) Buscar datos del producto por ID
+  currentProduct = await findProductById(productId);
+
+  // 2) Render en el DOM
+  renderProductDetails();
+
+  // 3) Listener del botón
+  const btn = document.getElementById("addToCart");
+  if (btn) btn.addEventListener("click", addToCart);
 }
