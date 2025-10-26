@@ -90,3 +90,11 @@ export default async function productList(category, selector) {
     shown: four.length,
   });
 }
+
+import { loadHeaderFooter } from '../js/utils.mjs';
+
+
+window.addEventListener('DOMContentLoaded', () => {
+loadHeaderFooter();
+//agregado por alan
+});

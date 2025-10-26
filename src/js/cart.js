@@ -1,3 +1,11 @@
+import { loadHeaderFooter } from '../js/utils.mjs';
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadHeaderFooter();
+  // tu lógica actual del carrito debajo...
+});
+
+
 import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
