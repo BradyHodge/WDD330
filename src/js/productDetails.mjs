@@ -1,4 +1,3 @@
-// src/js/productDetails.mjs
 import { findProductById } from "./productData.mjs";
 
 let currentProduct = null;

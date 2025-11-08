@@ -1,4 +1,4 @@
-// /js/productList.mjs
+// /js/productList.js
 import { getData } from "./productData.mjs";
 import { renderListWithTemplate } from "./utils.mjs";
 
