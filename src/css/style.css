@@ -220,3 +220,85 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+/* Checkout form styles */
+form fieldset {
+  border: 1px solid var(--light-grey);
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+form legend {
+  font-weight: bold;
+  font-size: var(--large-font);
+  color: var(--secondary-color);
+  padding: 0 0.5em;
+}
+
+form label {
+  display: block;
+  margin-top: 1em;
+  font-weight: bold;
+}
+
+form input {
+  width: 100%;
+  padding: 0.5em;
+  margin-top: 0.25em;
+  border: 1px solid var(--light-grey);
+  border-radius: 3px;
+  font-size: 1em;
+}
+
+form input:focus {
+  outline: 2px solid var(--primary-color);
+}
+
+form .required {
+  color: red;
+}
+
+#order-summary {
+  background-color: #f9f9f9;
+  padding: 1em;
+  border-radius: 5px;
+}
+
+#order-summary p {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5em 0;
+}
+
+#checkout-button {
+  width: 100%;
+  margin-top: 1em;
+  padding: 1em;
+  font-size: var(--large-font);
+}
+
+/* Cart total and checkout button styles */
+.cart-total {
+  text-align: right;
+  padding: 1em;
+  font-size: var(--large-font);
+  border-top: 2px solid var(--primary-color);
+  margin-top: 1em;
+}
+
+.checkout-button {
+  text-align: center;
+  margin: 1em 0;
+}
+
+.checkout-button button {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Responsive improvements */
+@media screen and (min-width: 500px) {
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}

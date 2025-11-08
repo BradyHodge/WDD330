@@ -1,4 +1,4 @@
-import { findProductById } from "./productData.mjs";
+import { findProductById } from "./externalServices.mjs";
 
 let currentProduct = null;
 
@@ -72,7 +72,7 @@ function addToCart(e) {
   localStorage.setItem(key, JSON.stringify(cart));
 
   // (Opcional) feedback rápido:
-  // alert("Added to cart!");
+  alert("Added to cart!");
 }
 
 // --- Punto de entrada del módulo ---

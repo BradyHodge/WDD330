@@ -1,5 +1,4 @@
-// /js/productList.js
-import { getData } from "./productData.mjs";
+import { getProductsByCategory } from "./externalServices.mjs";
 import { renderListWithTemplate } from "./utils.mjs";
 
 console.log("productList.mjs loaded");
@@ -79,7 +78,7 @@ export default async function productList(category, selector) {
   console.log("parent element found?", !!parent);
   if (!parent) return;
 
-  const products = await getData(category);
+  const products = await getProductsByCategory(category);
   console.log("fetched products:", products?.length, products?.[0]);
 
   const four = pickFour(products);
